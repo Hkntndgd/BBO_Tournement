@@ -1,0 +1,95 @@
+{% extends "game/base.html" %}
+
+{% block title %}Detail{% endblock %}
+
+{% block content %}
+<style>
+.row {
+  box-sizing: border-box;
+}
+{% widthratio 400 object_list.first.tournament.players.all.count 1 as b %}
+.column {
+  float: left;
+  width: {{b|add:"-1"}}%;
+  margin-bottom: 8px;
+  padding: 0 6px;
+}
+
+/* Display the columns below each other instead of side by side on small screens */
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+
+  }
+}
+
+
+
+/* Some left and right padding inside the container */
+.container {
+  padding: 0 4px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    height: 17vh;
+}
+
+th,td {
+    font-size:10px;
+}
+
+
+
+</style>
+
+{% widthratio 400 object_list.first.tournament.players.all.count 1 as b %}
+{% for match in object_list %}
+{% ifchanged match.play_date %}
+<div class="row">
+  <div class="column">
+      <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>GROUP:{{match.group}}</th>
+                    <th>{% ifchanged %} {{match.weekday}} {% endifchanged %} </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for score in match.scoreboard_set.all %}
+                <tr>
+                    <td>{{score.member}}</td>
+                    <td>{{score.score}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+      </div>
+    </div>
+    {% else %}
+    <div class="column">
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>GROUP:{{match.group}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for score in match.scoreboard_set.all %}
+                    <tr>
+                        <td>{{score.member}}</td>
+                        <td>{{score.score}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endifchanged %}
+{% endfor %}
+
+{% endblock %}

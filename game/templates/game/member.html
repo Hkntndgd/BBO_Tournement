@@ -1,0 +1,48 @@
+{% extends "game/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+    table{
+      margin:20px;
+    }
+    td,th {
+
+        font-size:10px;
+        }
+
+</style>
+{% if member_list %}
+<h3>Members</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nickname</th>
+      <th>First Name</th>
+      <th>Last name</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for member in member_list %}
+    <tr>
+      <td>{{member.username}}</td>
+      <td>{{member.first_name}}</td>
+      <td>{{member.last_name}}</td>
+
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+{% else %}
+    <p>No Member is available</p>
+{% endif %}
+
+
+{% endblock %}

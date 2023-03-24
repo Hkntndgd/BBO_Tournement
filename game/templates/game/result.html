@@ -1,0 +1,43 @@
+{% extends "game/base.html" %}
+
+{% block title %}Result{% endblock %}
+
+{% block content %}
+<style>
+    th {
+    padding:10px;
+    font-size:12px;
+    }
+    td{
+    text-align:right;
+    font-size:12px;
+    }
+</style>
+   <table>
+       <thead>
+        <tr>
+            <th>MEMBER</th>
+            {% for tournament in object_list.first.tournament_set.all %}
+            <th>{{ tournament|upper }} </th>
+            {% endfor %}
+            <th> TOTAL </th>
+        </tr>
+       </thead>
+    <tbody>
+
+    {% for member in object_list %}
+        <tr>
+            <td> {{ member }}</td>
+            {% for tournamentscoreboard in member.tournamentscoreboard_set.all %}
+            <td>{{ tournamentscoreboard.tournament_score }}</td>
+            {% endfor %}
+            <td>{{ member.total_points }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+
+
+{% endblock %}

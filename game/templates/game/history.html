@@ -1,0 +1,48 @@
+{% extends "game/base.html" %}
+
+{% block title %}History{% endblock %}
+
+{% block content %}
+<style>
+    th {
+    padding:10px;
+    font-size:12px;
+    }
+    td{
+    text-align:right;
+    font-size:12px;
+    }
+</style>
+
+{% if tournament_result_list %}
+   <table>
+       <thead>
+        <tr>
+            <th>Member</th>
+            {% for result in tournament_result_list %}
+                {% ifchanged result.tournament %}
+                <th>{{result.tournament}}</th>
+                {% endifchanged %}
+            {% endfor %}
+            <th>Total</th>
+        </tr>
+       </thead>
+
+    <tbody>
+
+        {% for resul in tournament_result_list %}
+        <tr>
+            <td>{{result.member}}</td>
+            <td>{{result.tournament_score}}</td>
+
+
+        </tr>
+          {% endfor %}
+    </tbody>
+
+</table>
+{% else %}
+<h1>No Tournament Launched Yet</h1>
+{% endif %}
+
+{% endblock %}

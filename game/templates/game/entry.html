@@ -1,0 +1,18 @@
+{% extends "game/base.html" %}
+
+{% block title %}Result{% endblock %}
+
+{% block content %}
+<style>
+    div {
+    padding:5px;
+    }
+</style>
+
+<form method="post">
+    {% csrf_token %}
+    {{ formset.as_div }}
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

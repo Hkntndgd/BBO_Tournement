@@ -1,0 +1,67 @@
+{% extends "game/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<style>
+    a{
+        color:white;
+    }
+    li {
+        list-style-type: none;
+        font-size:10px;
+    }
+    .pagination {
+        font-size:10px;
+    }
+</style>
+
+{% if ongoing_tournament_match_list %}
+<h3>{{ongoing_tournament_match_list.first.tournament}} </h3>
+
+    <ul>
+        {% for match in ongoing_tournament_match_list %}
+        {% ifchanged %}<h3>Week: {{match.week}} Day: {{match.weekday}}</h3>{% endifchanged %}
+
+        {% if request.user.is_staff %}
+        <li> Match <a href="{% url 'game:entry' match.id page_obj.number %}">{{match.id}}</a> </li>
+        {% else %}
+        <li> Match {{match.id}} </li>
+        {% endif %}
+        <ul>
+            {% for member in match.participants.all %}
+            <li> {{member}}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </ul>
+
+{% else %}
+    <p>No Tournaments are available</p>
+{% endif %}
+
+
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "game/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{{date | json_script:'date-data'}}
+{% load static %}
+<script src="{% static 'home.js' %}">
+    </script>
+{% if latest_tournament %}
+<h1>{{latest_tournament.name}} </h1>
+<ul>
+
+    <li><h4>    Launched at: {{date}}</h4></li>
+
+    {% if active_week > 0 %}
+    <li><h4>    Current week: {{active_week|add:"1"}}/{{latest_tournament.length_of_tournament}}</h4></li>
+    {% else %}
+
+    <li><h4> {% widthratio active_week 1 -1 as week %} Tournament will kick off in {{week}} week{{ week|pluralize }}</h4></li>
+    {% endif %}
+</ul>
+{% else %}
+<h1> No Tournament Launched Yet</h1>
+{% endif %}
+{% endblock %}

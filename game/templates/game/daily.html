@@ -1,0 +1,40 @@
+{% extends "game/base.html" %}
+
+{% block title %}Detail{% endblock %}
+
+{% block content %}
+<style>
+    th,td {
+        padding:0px;
+        font-size:10px;
+    }
+    .dailyscore {
+        margin-left:40px;
+    }
+</style>
+<div class="dailyscore">
+<table>
+    {% for item in scoreboard_list %}
+
+    {% ifchanged %}<h3>Week: {{item.match.week}}  Day: {{item.match.weekday}}</h3>{% endifchanged %}
+    <thead>
+        <tr>
+            <th>
+                {% ifchanged %}Match no:{{item.match_id}}</a> {% endifchanged %}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ item.member }}</td>
+            <td>{{ item.score }}</td>
+        </tr>
+    </tbody>
+    {% empty %}
+    <h2>No match available on this date</h2>
+
+{% endfor %}
+</table>
+</div>
+
+{% endblock %}
